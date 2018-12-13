@@ -126,4 +126,17 @@ table 50101 "CSD Seminar"
         "Last Date Modified" := Today();
     end;
 
+    procedure AssistEdit(): Boolean;
+    begin
+        with Seminar do begin
+            Seminar := Rec;
+            SeminarSetup.get;
+            SeminarSetup.TestField("Seminar Nos.");
+            if NoSeriesMgt.SelectSeries(SeminarSetup."Seminar Nos.", xRec."No. Series", "No. Series") then begin
+                NoSeriesMgt.SetSeries("No.");
+                Rec := Seminar;
+                exit(true);
+            End;
+        end;
+    End;
 }
